@@ -1,0 +1,14 @@
+.list-select-container {
+  cursor: pointer;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.list-select__option {
+  padding: 0.25rem 0.5rem;
+}
+
+.list-select__option:hover {
+  background: #ddd;
+}
