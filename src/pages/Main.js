@@ -1,11 +1,11 @@
 import BoxGen from "../components/gen/BoxGen";
-import BtnGen from "../components/gen/BtnGen";
+import MakeBtns from "./MakeBtns";
 import "./Main.css";
 
 const Main = () => {
   return (
     <>
-      <BtnGen />
+      <MakeBtns />
       <BoxGen />
     </>
   );
