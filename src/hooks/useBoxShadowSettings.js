@@ -6,7 +6,7 @@ const useBoxShadowSettings = () => {
 
   const [ hasBoxShadow, setHasBoxShadow ] = useState(false);
   const boxShadowColor = useColorSelectorSettings("#000000", 0.75);
-  const [ boxShadowBlur, setBoxShadowBlur ] = useState(20);
+  const [ boxShadowBlur, setBoxShadowBlur ] = useState(7);
   const [ boxShadowSize, setBoxShadowSize ] = useState(1);
   const [ boxShadowX, setBoxShadowX ] = useState(5);
   const [ boxShadowY, setBoxShadowY ] = useState(5);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ColorSelect from "../select/ColorSelect";
 import RangeSelect from "../select/RangeSelect";
+import ListSelect from "../select/ListSelect/ListSelect";
 import Border from "../properties/Border";
 import Padding from "../properties/Padding";
 import BoxShadow from "../properties/BoxShadow";
@@ -9,18 +10,6 @@ import useBoxShadowSettings from "../../hooks/useBoxShadowSettings";
 import usePaddingSettings from "../../hooks/usePaddingSettings";
 import useColorSelectorSettings, {
   colorSelectorSettingsToFullHex as toFullHex } from "../../hooks/useColorSelectorSettings";
-
-/*
-button
-  - font-size
-  - font-weight
-  - color
-  - background-color
-  - border color
-  - border-radius
-  - min-width
-  - min-height
-*/
 
 const BtnGen = ({
   buttons=[
@@ -39,10 +28,15 @@ const BtnGen = ({
 
   const textColor = useColorSelectorSettings("#ffffff", 1);
   const bgColor = useColorSelectorSettings("#000000", 1);
-  const hoverBgColor = useColorSelectorSettings("#000000", 1);
+  const hoverBgColor = useColorSelectorSettings("#999999", 1);
 
   const [ marginVertical, setMarginVertical ] = useState(0);
   const [ marginHorizontal, setMarginHorizontal ] = useState(0.25);
+
+  const [ fontSize, setFontSize ] = useState(16);
+  const [ fontWeight, setFontWeight ] = useState(400);
+  const [ fontFamily, setFontFamily ] = useState("Arial");
+  const [ letterSpacing, setLetterSpacing ] = useState(0);
 
   const borderSettings = useBorderSettings();
   const boxShadowSettings = useBoxShadowSettings();
@@ -51,6 +45,58 @@ const BtnGen = ({
   return (
     <div className="gen-container">
       <div className="gen-controls">
+        <div className="grid grid-2">
+          <div style={{ gridColumn: "span 2" }}>Font Settings</div>
+          <ColorSelect
+            id="text-color"
+            value={textColor.color}
+            setValue={textColor.setColor}
+            showOpacitySettings={false}
+            blocking={true}
+          />
+          <ListSelect
+            label="Font Family"
+            labelSize={0.9}
+            options={[
+              { label: "Arial", value: "Arial" },
+              { label: "Monospace", value: "Monospace" },
+              { label: "Serif", value: "serif" }
+            ]}
+            value={fontFamily}
+            setValue={setFontFamily}
+          />
+          <RangeSelect
+            id={`font-size`}
+            label="Font Size"
+            labelSize={0.9}
+            units="px"
+            value={fontSize}
+            setValue={setFontSize}
+            min={5}
+            max={25}
+          />
+          <RangeSelect
+            id={`font-weight`}
+            label="Font Weight"
+            labelSize={0.9}
+            value={fontWeight}
+            setValue={setFontWeight}
+            min={100}
+            max={900}
+            step={100}
+          />
+          <RangeSelect
+            id="letter-spacing"
+            label="Letter Spacing"
+            labelSize={0.9}
+            value={letterSpacing}
+            setValue={setLetterSpacing}
+            min={0}
+            max={1}
+            step={0.10}
+          />
+        </div>
+
         <Padding {...paddingSettings} />
 
         <div className="grid grid-2">
@@ -103,12 +149,6 @@ const BtnGen = ({
           value={hoverBgColor.color}
           setValue={hoverBgColor.setColor}
         />
-        <ColorSelect
-          id="text-color"
-          label="Text"
-          value={textColor.color}
-          setValue={textColor.setColor}
-        />
       </div>
       <div className="gen-preview" style={{ textAlign: "center" }}>
         {buttons.map((btn, index) => (
@@ -126,7 +166,11 @@ const BtnGen = ({
                   : toFullHex(bgColor),
                 padding: paddingSettings.padding,
                 boxShadow: boxShadowSettings.boxShadow,
-                margin: `${marginVertical}rem ${marginHorizontal}rem`
+                margin: `${marginVertical}rem ${marginHorizontal}rem`,
+                fontSize: `${fontSize}px`,
+                fontWeight: fontWeight,
+                fontFamily: fontFamily,
+                letterSpacing: `${letterSpacing}px`
               }}
               key={index}
               onClick={() => window.open(btn?.url, "_blank")}

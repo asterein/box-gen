@@ -1,15 +1,56 @@
 import { useState } from "react";
 import useHeadingSettings from "../../hooks/useHeadingSettings";
+import useColorSelectorSettings, {
+  colorSelectorSettingsToFullHex as toFullHex } from "../../hooks/useColorSelectorSettings";
 import ColorSelect from "../select/ColorSelect";
 import RangeSelect from "../select/RangeSelect";
 import CheckBoxSelect from "../select/CheckBoxSelect";
 import ListSelect from "../select/ListSelect/ListSelect";
+
+/*
+link
+  - color
+  - bold / italic / underline
+  - hover behaviour
+*/
 
 const FontsGen = () => {
 
   const [ bodyFontFamily, setBodyFontFamily ] = useState("Arial");
   const [ bodyFontSize, setBodyFontSize ] = useState(16);
   const [ bodyLineHeight, setBodyLineHeight ] = useState(1);
+  const [ bodyLetterSpacing, setBodyLetterSpacing ] = useState(0);
+
+  const [ linkHover, setLinkHover ] = useState(false);
+
+  const [ linkIsItalic, setLinkIsItalic ] = useState(false);
+  const [ linkIsUnderline, setLinkIsUnderline ] = useState(false);
+  const [ linkWeight, setLinkWeight ] = useState(400);
+  const linkColor = useColorSelectorSettings("#000000", 1);
+
+  const [ linkIsItalicHover, setLinkIsItalicHover ] = useState(false);
+  const [ linkIsUnderlineHover, setLinkIsUnderlineHover ] = useState(true);
+  const [ linkWeightHover, setLinkWeightHover ] = useState(400);
+  const linkColorHover = useColorSelectorSettings("#999999", 1);
+
+
+  const linkStyles = {
+    fontStyle: linkHover
+      ? linkIsItalicHover ? "italic" : "normal"
+      : linkIsItalic ? "italic" : "normal",
+    textDecoration: linkHover
+      ? linkIsUnderlineHover ? "underline" : "none"
+      : linkIsUnderline ? "underline" : "none",
+    fontWeight: linkHover
+      ? linkWeightHover
+      : linkWeight,
+    color: linkHover
+      ? toFullHex(linkColorHover)
+      : toFullHex(linkColor),
+    cursor: "pointer"
+  }
+
+  const [ targetHeading, setTargetHeading ] = useState(0);
 
   const h1 = useHeadingSettings(32);
   const h2 = useHeadingSettings(24);
@@ -56,73 +97,176 @@ const FontsGen = () => {
             max={3}
             step={0.25}
           />
+          <RangeSelect
+            id="body-letter-spacing"
+            label="Letter Spacing"
+            labelSize={0.9}
+            value={bodyLetterSpacing}
+            setValue={setBodyLetterSpacing}
+            min={0}
+            max={1}
+            step={0.10}
+          />
         </div>
-        {headingSettings.map((heading, index) => <div
-          class="grid grid-2"
-          style={{ border: "1px solid #ddd", borderRadius: "5px", padding: "1rem" }}
-        >
-          <div><b>Heading {index+1}</b></div>
-          <div>
-            <CheckBoxSelect
-              id={`${index+1}-italic`}
-              label="Italicize"
-              value={heading?.isItalic}
-              setValue={heading?.setIsItalic}
+
+        <div style={{ padding: "1rem", border: "1px solid #ddd", borderRadius: "5px" }}>
+          <div className="grid grid-2">
+            <div><b>Link Settings (default)</b></div>
+            <div>
+              <CheckBoxSelect
+                id="link-italic"
+                label="Italicize"
+                value={linkIsItalic}
+                setValue={setLinkIsItalic}
+              />
+              <CheckBoxSelect
+                id="link-underline"
+                label="Underline"
+                value={linkIsUnderline}
+                setValue={setLinkIsUnderline}
+              />
+            </div>
+            <RangeSelect
+              id="link-weight"
+              label="Font Weight"
+              labelSize={0.9}
+              value={linkWeight}
+              setValue={setLinkWeight}
+              min={100}
+              max={900}
+              step={100}
             />
-            <CheckBoxSelect
-              id={`${index+1}-underline`}
-              label="Underline"
-              value={heading?.isUnderline}
-              setValue={heading?.setIsUnderline}
+            <ColorSelect
+              id="link-color"
+              value={linkColor?.color}
+              setValue={linkColor?.setColor}
+              showOpacitySettings={false}
+              blocking={true}
             />
           </div>
-          <ColorSelect
-            id={`${index+1}-color`}
-            value={heading?.color?.color}
-            setValue={heading?.color?.setColor}
-            showOpacitySettings={false}
-            blocking={true}
-          />
-          <RangeSelect
-            id={`${index+1}-font-size`}
-            label="Font Size"
-            labelSize={0.9}
-            units="px"
-            value={heading?.fontSize}
-            setValue={heading?.setFontSize}
-            min={9}
-            max={50}
-          />
-          <RangeSelect
-            id={`${index+1}-font-weight`}
-            label="Font Weight"
-            labelSize={0.9}
-            value={heading?.fontWeight}
-            setValue={heading?.setFontWeight}
-            min={100}
-            max={900}
-            step={100}
-          />
-          <RangeSelect
-            id={`${index+1}-line-height`}
-            label="Line Height"
-            labelSize={0.9}
-            value={heading?.lineHeight}
-            setValue={heading?.setLineHeight}
-            min={0}
-            max={3}
-            step={0.25}
-          />
+
+          <div className="grid grid-2">
+            <div><b>Link Settings (hover)</b></div>
+            <div>
+              <CheckBoxSelect
+                id="link-italic-hover"
+                label="Italicize"
+                value={linkIsItalicHover}
+                setValue={setLinkIsItalicHover}
+              />
+              <CheckBoxSelect
+                id="link-underline-hover"
+                label="Underline"
+                value={linkIsUnderlineHover}
+                setValue={setLinkIsUnderlineHover}
+              />
+            </div>
+            <RangeSelect
+              id="link-weight-hover"
+              label="Font Weight"
+              labelSize={0.9}
+              value={linkWeightHover}
+              setValue={setLinkWeightHover}
+              min={100}
+              max={900}
+              step={100}
+            />
+            <ColorSelect
+              id="link-color-hover"
+              value={linkColorHover?.color}
+              setValue={linkColorHover?.setColor}
+              showOpacitySettings={false}
+              blocking={true}
+            />
+          </div>
+        </div>
+
+        {headingSettings.map((heading, index) => <div
+          className="grid grid-2"
+          style={{ border: "1px solid #ddd", borderRadius: "5px", padding: "1rem" }}
+          key={index}
+        >
+
+          {targetHeading === index
+            ? <>
+              <div><b>Heading {index+1}</b></div>
+              <div>
+                <CheckBoxSelect
+                  id={`${index+1}-italic`}
+                  label="Italicize"
+                  value={heading?.isItalic}
+                  setValue={heading?.setIsItalic}
+                />
+                <CheckBoxSelect
+                  id={`${index+1}-underline`}
+                  label="Underline"
+                  value={heading?.isUnderline}
+                  setValue={heading?.setIsUnderline}
+                />
+              </div>
+              <ColorSelect
+                id={`${index+1}-color`}
+                value={heading?.color?.color}
+                setValue={heading?.color?.setColor}
+                showOpacitySettings={false}
+                blocking={true}
+              />
+              <RangeSelect
+                id={`${index+1}-font-size`}
+                label="Font Size"
+                labelSize={0.9}
+                units="px"
+                value={heading?.fontSize}
+                setValue={heading?.setFontSize}
+                min={9}
+                max={50}
+              />
+              <RangeSelect
+                id={`${index+1}-font-weight`}
+                label="Font Weight"
+                labelSize={0.9}
+                value={heading?.fontWeight}
+                setValue={heading?.setFontWeight}
+                min={100}
+                max={900}
+                step={100}
+              />
+              <RangeSelect
+                id={`${index+1}-line-height`}
+                label="Line Height"
+                labelSize={0.9}
+                value={heading?.lineHeight}
+                setValue={heading?.setLineHeight}
+                min={0}
+                max={3}
+                step={0.25}
+              />
+            </>
+            : <div style={{
+                cursor: "pointer",
+                gridColumn: "span 2"
+              }}
+              onClick={() => setTargetHeading(index)}>
+                <b>Heading {index+1}</b>
+              </div>}
         </div>)}
 
       </div>
       <div className="gen-preview" style={{
-        textAlign: "justify",
-        textJustify: "inter-word",
+        textAlign: "left",
         fontSize: `${bodyFontSize}px`,
         lineHeight: bodyLineHeight,
-        fontFamily: bodyFontFamily
+        fontFamily: bodyFontFamily,
+        letterSpacing: `${bodyLetterSpacing}px`
       }}>
+        <div style={{ textAlign: "center" }}>
+          <span
+            className="link-dummy"
+            style={linkStyles}
+            onMouseEnter={() => setLinkHover(true)}
+            onMouseLeave={() => setLinkHover(false)}
+          >Example Link</span>
+        </div>
         <h1 style={h1?.styles}>Heading 1</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae felis eget urna maximus consequat vitae et
         nulla. Duis vel convallis risus. Aliquam ex dolor, accumsan quis nunc ultricies, rutrum elementum est.</p>
