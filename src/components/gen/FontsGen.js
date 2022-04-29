@@ -246,7 +246,7 @@ const FontsGen = () => {
                 />
               </>
               : <div style={{ gridColumn: "span 2" }}>
-                  <b>Heading {index+1}</b>
+                  <span style={{ color: "#999999", fontSize: "0.75rem" }}>&#9660;&nbsp;</span> <b>Heading {index+1}</b>
                 </div>
             }
           </div>
