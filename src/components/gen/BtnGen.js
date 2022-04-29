@@ -47,13 +47,6 @@ const BtnGen = ({
       <div className="gen-controls">
         <div className="grid grid-2">
           <div style={{ gridColumn: "span 2" }}>Font Settings</div>
-          <ColorSelect
-            id="text-color"
-            value={textColor.color}
-            setValue={textColor.setColor}
-            showOpacitySettings={false}
-            blocking={true}
-          />
           <ListSelect
             label="Font Family"
             labelSize={0.9}
@@ -64,6 +57,13 @@ const BtnGen = ({
             ]}
             value={fontFamily}
             setValue={setFontFamily}
+          />
+          <ColorSelect
+            id="text-color"
+            value={textColor.color}
+            setValue={textColor.setColor}
+            showOpacitySettings={false}
+            blocking={true}
           />
           <RangeSelect
             id={`font-size`}

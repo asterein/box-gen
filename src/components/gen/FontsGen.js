@@ -144,7 +144,7 @@ const FontsGen = () => {
               blocking={true}
             />
           </div>
-
+          <hr />
           <div className="grid grid-2">
             <div><b>Link Settings (hover)</b></div>
             <div>
@@ -182,73 +182,74 @@ const FontsGen = () => {
         </div>
 
         {headingSettings.map((heading, index) => <div
-          className="grid grid-2"
-          style={{ border: "1px solid #ddd", borderRadius: "5px", padding: "1rem" }}
-          key={index}
+          style={targetHeading !== index ? { cursor: "pointer"} : {}}
+          onClick={() => setTargetHeading(index)}
         >
-
-          {targetHeading === index
-            ? <>
-              <div><b>Heading {index+1}</b></div>
-              <div>
-                <CheckBoxSelect
-                  id={`${index+1}-italic`}
-                  label="Italicize"
-                  value={heading?.isItalic}
-                  setValue={heading?.setIsItalic}
+          <div
+            className="grid grid-2"
+            style={{ border: "1px solid #ddd", borderRadius: "5px", padding: "1rem" }}
+            key={index}
+          >
+            {targetHeading === index
+              ? <>
+                <div><b>Heading {index+1}</b></div>
+                <div>
+                  <CheckBoxSelect
+                    id={`${index+1}-italic`}
+                    label="Italicize"
+                    value={heading?.isItalic}
+                    setValue={heading?.setIsItalic}
+                  />
+                  <CheckBoxSelect
+                    id={`${index+1}-underline`}
+                    label="Underline"
+                    value={heading?.isUnderline}
+                    setValue={heading?.setIsUnderline}
+                  />
+                </div>
+                <ColorSelect
+                  id={`${index+1}-color`}
+                  value={heading?.color?.color}
+                  setValue={heading?.color?.setColor}
+                  showOpacitySettings={false}
+                  blocking={true}
                 />
-                <CheckBoxSelect
-                  id={`${index+1}-underline`}
-                  label="Underline"
-                  value={heading?.isUnderline}
-                  setValue={heading?.setIsUnderline}
+                <RangeSelect
+                  id={`${index+1}-font-size`}
+                  label="Font Size"
+                  labelSize={0.9}
+                  units="px"
+                  value={heading?.fontSize}
+                  setValue={heading?.setFontSize}
+                  min={9}
+                  max={50}
                 />
-              </div>
-              <ColorSelect
-                id={`${index+1}-color`}
-                value={heading?.color?.color}
-                setValue={heading?.color?.setColor}
-                showOpacitySettings={false}
-                blocking={true}
-              />
-              <RangeSelect
-                id={`${index+1}-font-size`}
-                label="Font Size"
-                labelSize={0.9}
-                units="px"
-                value={heading?.fontSize}
-                setValue={heading?.setFontSize}
-                min={9}
-                max={50}
-              />
-              <RangeSelect
-                id={`${index+1}-font-weight`}
-                label="Font Weight"
-                labelSize={0.9}
-                value={heading?.fontWeight}
-                setValue={heading?.setFontWeight}
-                min={100}
-                max={900}
-                step={100}
-              />
-              <RangeSelect
-                id={`${index+1}-line-height`}
-                label="Line Height"
-                labelSize={0.9}
-                value={heading?.lineHeight}
-                setValue={heading?.setLineHeight}
-                min={0}
-                max={3}
-                step={0.25}
-              />
-            </>
-            : <div style={{
-                cursor: "pointer",
-                gridColumn: "span 2"
-              }}
-              onClick={() => setTargetHeading(index)}>
-                <b>Heading {index+1}</b>
-              </div>}
+                <RangeSelect
+                  id={`${index+1}-font-weight`}
+                  label="Font Weight"
+                  labelSize={0.9}
+                  value={heading?.fontWeight}
+                  setValue={heading?.setFontWeight}
+                  min={100}
+                  max={900}
+                  step={100}
+                />
+                <RangeSelect
+                  id={`${index+1}-line-height`}
+                  label="Line Height"
+                  labelSize={0.9}
+                  value={heading?.lineHeight}
+                  setValue={heading?.setLineHeight}
+                  min={0}
+                  max={3}
+                  step={0.25}
+                />
+              </>
+              : <div style={{ gridColumn: "span 2" }}>
+                  <b>Heading {index+1}</b>
+                </div>
+            }
+          </div>
         </div>)}
 
       </div>
@@ -265,7 +266,7 @@ const FontsGen = () => {
             style={linkStyles}
             onMouseEnter={() => setLinkHover(true)}
             onMouseLeave={() => setLinkHover(false)}
-          >Example Link</span>
+          >Example Link (hover on me!)</span>
         </div>
         <h1 style={h1?.styles}>Heading 1</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae felis eget urna maximus consequat vitae et

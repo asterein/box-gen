@@ -5,6 +5,13 @@ html, body {
   text-justify: inter-word;
 }
 
+hr {
+  background: #ddd;
+  display: block;
+  height: 1px;
+  border: none;
+}
+
 label {
   display: block;
   margin: 0.25rem auto;
