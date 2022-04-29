@@ -3,6 +3,7 @@ import "./ListSelect.css";
 
 const ListSelect = ({
   label,
+  labelSize=1,
   options=[{
     label: "default label",
     value: "default value"
@@ -27,7 +28,7 @@ const ListSelect = ({
 
   return (
     <div>
-      {label}
+      <span style={{ fontSize: `${labelSize}rem`}}>{label}</span>
       <div className="list-select-container" onClick={toggleOptionDropdown}>
         {toggleOptions
           ? options.map((option, index) => (

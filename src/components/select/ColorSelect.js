@@ -6,12 +6,13 @@ const ColorSelect = ({
   labelSize=1,
   value,
   setValue,
-  showOpacitySettings=true
+  showOpacitySettings=true,
+  blocking=false
 }) => (
-  <div className="grid grid-2 color-select" style={{ fontSize: `${labelSize}rem`}}>
+  <div className={blocking ? "color-select" : "grid grid-2 color-select"} style={{ fontSize: `${labelSize}rem`}}>
     <div style={{ gridColumn: "span 2"}}>{label}</div>
 
-    <div>
+    <div style={{ marginBottom: blocking && showOpacitySettings && "0.5rem" }}>
       <label htmlFor={`${id}-base`}>
         <div>Color</div>
         <div>{value.base}</div>

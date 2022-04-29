@@ -5,7 +5,7 @@ import useColorSelectorSettings, {
 const useBorderSettings = () => {
 
   const [ hasBorder, setHasBorder ] = useState(false);
-  const [ borderWidth, setBorderWidth ] = useState(0);
+  const [ borderWidth, setBorderWidth ] = useState(1);
   const borderColor = useColorSelectorSettings("#000000", 1);
 
   const settings = {

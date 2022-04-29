@@ -10,6 +10,18 @@ import usePaddingSettings from "../../hooks/usePaddingSettings";
 import useColorSelectorSettings, {
   colorSelectorSettingsToFullHex as toFullHex } from "../../hooks/useColorSelectorSettings";
 
+/*
+button
+  - font-size
+  - font-weight
+  - color
+  - background-color
+  - border color
+  - border-radius
+  - min-width
+  - min-height
+*/
+
 const BtnGen = ({
   buttons=[
     {
