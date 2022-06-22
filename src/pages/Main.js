@@ -9,6 +9,10 @@ const Main = () => {
       <FontsGen />
       <BtnGen />
       <BoxGen />
+      <div className="github-link" onClick={() => window.open("https://github.com/asterein/box-gen", "_blank")}>
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Go to Github repo" />
+      </div>
+      <span>Go to Github repo!</span>
     </>
   );
 }
