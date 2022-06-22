@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/box-gen/static/css/main.d1243c54.css",
+    "main.js": "/box-gen/static/js/main.de307328.js",
+    "static/js/787.938b5ba0.chunk.js": "/box-gen/static/js/787.938b5ba0.chunk.js",
+    "index.html": "/box-gen/index.html",
+    "main.d1243c54.css.map": "/box-gen/static/css/main.d1243c54.css.map",
+    "main.de307328.js.map": "/box-gen/static/js/main.de307328.js.map",
+    "787.938b5ba0.chunk.js.map": "/box-gen/static/js/787.938b5ba0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d1243c54.css",
+    "static/js/main.de307328.js"
+  ]
+}
